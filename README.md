@@ -1,2 +1,2 @@
 # GTA
-Reproducing code for the paper of GTA: Geometry-Aware Attention Mechanism for Multiview Transformers
+Reproducing code for the paper of GTA: A Geometry-Aware Attention Mechanism for Multi-view Transformers
