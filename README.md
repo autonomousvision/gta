@@ -1,3 +1,6 @@
 # GTA
-Reproducing code for the paper of GTA: A Geometry-Aware Attention Mechanism for Multi-view Transformers
-(Now under construction)
+Reproducing code for the paper of GTA: A Geometry-Aware Attention Mechanism for Multi-view Transformers.
+- [Paper](https://arxiv.org/abs/2310.10375)
+- [Project page](https://takerum.github.io/gta/)
+
+The code will be released soon.
