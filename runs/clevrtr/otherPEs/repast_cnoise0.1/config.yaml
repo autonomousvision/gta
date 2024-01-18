@@ -1,0 +1,64 @@
+data:
+  dataset: clevrtr
+  path: 
+  num_points: 2560
+  kwargs:
+    downsample: 1
+    num_input_views: 2
+    num_target_views: 3
+    overlap: False
+    camera_noise: 0.1
+    kubric_basis: True
+
+model:
+  model_type: srt
+  args:
+    encoder: isrt 
+    decoder: isrt 
+    encoder_kwargs:
+      pos_start_octave: -5
+      dim: 768
+      attdim: 384
+      heads: 6
+      dropout: 0.01
+      repast: True
+      canon_emb: True
+      emb: False
+      attn_args: 
+        method:
+          name: 'repast'
+          args:
+            q_emb_dim: 180
+            k_emb_dim: 180
+        
+        
+
+    decoder_kwargs:
+      z_dim: 384
+      rmlp_dim: 768
+      heads: 6
+      pos_start_octave: -5
+      dropout: 0.01
+      repast: True
+      attn_args: 
+        method:
+          name: 'repast'
+          args:
+            q_emb_dim: 0
+            k_emb_dim: 180
+
+
+training:
+  mixed_prec: False
+  num_workers: 4
+  batch_size: 32
+  model_selection_metric: psnr
+  model_selection_mode: maximize
+  print_every: 100
+  visualize_every: 10000
+  validate_every: 10000
+  checkpoint_every: 1000
+  backup_every: 25000
+  max_it: 2000000
+  decay_it: 1000000
+  lr_warmup: 5000

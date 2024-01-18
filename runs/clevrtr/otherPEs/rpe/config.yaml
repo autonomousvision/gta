@@ -1,0 +1,73 @@
+data:
+  dataset: clevrtr
+  path: 
+  num_points: 2560
+  kwargs:
+    downsample: 1
+    downsample_input_coord: 3
+    return_transform: True
+    num_input_views: 2
+    num_target_views: 3
+    overlap: False
+
+model:
+  model_type: tsrt
+  args:
+    encoder: isrt 
+    decoder: isrt 
+    encoder_kwargs:
+      pos_start_octave: -5
+      dim: 768
+      attdim: 384
+      heads: 6
+      dropout: 0.01
+      emb: False
+      attn_args: 
+        method:
+          name: 'invatt_directsum'
+          args:
+            rpe: True
+            so2: 4
+            max_freq_h: 1
+            max_freq_w: 1
+            f_dims: 
+              triv: 64
+              se3: 16
+              so2: 32
+      
+
+    decoder_kwargs:
+      z_dim: 384
+      rmlp_dim: 768
+      heads: 6
+      pos_start_octave: -5
+      dropout: 0.01
+      emb: const
+      attn_args: 
+        method:
+          name: 'invatt_directsum'
+          args:
+            rpe: True
+            so2: 4
+            max_freq_h: 1
+            max_freq_w: 1
+            f_dims: 
+              triv: 64
+              se3: 16
+              so2: 32
+
+
+training:
+  mixed_prec: False
+  num_workers: 4
+  batch_size: 32
+  model_selection_metric: psnr
+  model_selection_mode: maximize
+  print_every: 100
+  visualize_every: 10000
+  validate_every: 10000
+  checkpoint_every: 1000
+  backup_every: 25000
+  max_it: 3000000
+  decay_it: 1000000
+  lr_warmup: 5000

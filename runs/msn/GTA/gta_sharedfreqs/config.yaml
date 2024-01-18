@@ -1,0 +1,69 @@
+data:
+  dataset: msn
+  path: /mnt/lustre/geiger/gwb746/datasets/msn_hard/
+  num_points: 2560
+  kwargs:
+    downsample: 0
+    downsample_input_coord: 3
+    return_transform: True
+    num_input_views: 5
+    num_target_views: 5
+
+model:
+  model_type: tsrt
+  args:
+    encoder: isrt
+    decoder: isrt
+    encoder_kwargs:
+      pos_start_octave: -5
+      dropout: 0.01
+      heads: 8
+      emb: False
+      attn_args: 
+        method:
+          name: 'gta'
+          args:
+            so2: 12
+            flash_attn: False
+            max_freq_h: 0.5
+            max_freq_w: 0.5
+            shared_freqs: True
+            f_dims:
+              triv: 0
+              se3: 48
+              so2: 48
+
+    decoder_kwargs:
+      z_dim: 768
+      pos_start_octave: -5
+      dropout: 0.01
+      heads: 8
+      emb: const
+      attn_args: 
+        method:
+          name: 'gta'
+          args:
+            so2: 12
+            max_freq_h: 0.5
+            max_freq_w: 0.5
+            shared_freqs: True
+            f_dims:
+              triv: 0
+              se3: 48
+              so2: 48
+
+
+training:
+  mixed_prec: True
+  num_workers: 1
+  batch_size: 64
+  model_selection_metric: psnr
+  model_selection_mode: maximize
+  print_every: 100
+  visualize_every: 10000
+  validate_every: 10000
+  checkpoint_every: 1000
+  backup_every: 25000
+  max_it: 4000000
+  decay_it: 2000000
+  lr_warmup: 10000

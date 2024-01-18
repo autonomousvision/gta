@@ -1,0 +1,17 @@
+tqdm
+seaborn
+matplotlib
+ipywidgets
+tensorflow
+tensorboard
+pyquaternion
+einops
+torch==2.0.0
+torchvision==0.15.1
+pyyaml
+scipy
+imageio
+opencv-python
+einops
+sunds
+gsutil
