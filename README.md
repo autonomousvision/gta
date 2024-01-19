@@ -13,8 +13,9 @@
   </p>
   <h3 align="center"><a href="https://openreview.net/forum?id=uJVHygNeSZ">OpenReview</a> | <a href="https://arxiv.org/abs/2310.10375">arXiv</a>  | <a href="https://takerum.github.io/gta/">Project Page</a> </h3>
 
+
   <p align="center">
-  <img width="800" alt="gta_mech" src="https://github.com/takerum/gta_private/assets/11573649/b326d2c1-41f9-49da-bcc5-5aee6d9ed7fe">
+  <img width="800" alt="gta_mech" src="https://github.com/autonomousvision/gta/assets/11573649/b12ce677-df83-487c-ba10-06d844048a46">
   </p>
 </p>
 This repository contains the reproducing code for our ICLR2024 work: "GTA: A Geometry-Aware Attention Mechanism for Multi-view Transformers", a simple way to make your multi-view transformer more expressive!
@@ -40,15 +41,15 @@ mkdir -p $DATADIR
 
 Download the dataset from this [link](https://drive.google.com/file/d/1iT3LjOPm1etcLKs7nVoHhYWU6qR1PdRG/view?usp=drive_link) and place it under `$DATADIR`
 
-<img width="400" alt="clevr1" src="https://github.com/takerum/gta_private/assets/11573649/687ab4d3-dd67-4f5b-bf14-f1d96e94608d">
-<img width="400" alt="clevr2" src="https://github.com/takerum/gta_private/assets/11573649/5fbc336b-739c-4815-8c18-2ac7f2644625">
+<img width="400" alt="clevr1" src="https://github.com/autonomousvision/gta/assets/11573649/0952c2f7-47e4-41c1-93a4-bad57a8df12e">
+<img width="400" alt="clevr2" src="https://github.com/autonomousvision/gta/assets/11573649/1aca1f94-8b7e-42c8-9703-13f2dd60de38">
 
 ### MultiShapeNet Hard (MSN-Hard)
 ```
 gsutil -m cp -r gs://kubric-public/tfds/kubric_frames/multi_shapenet_conditional/2.8.0/ ${DATADIR}/multi_shapenet_frames/
 ```
 
-<img width="800" alt="gta_mech" src="https://github.com/takerum/gta_private/assets/11573649/30c88c52-ae82-41a6-be1a-f526d224a9f0">
+<img width="800" alt="gta_mech" src="https://github.com/autonomousvision/gta/assets/11573649/de09e2d9-1eb1-4833-981b-3ef11c1c5fa3">
 
 # Training
 
