@@ -51,7 +51,7 @@ python experiment_scripts/train_acid.py --experiment_name acid_gta --batch_size 
 
 followed by running the command below (adding lpips and depth loss later in training)
 ```
-python experiment_scripts/train_acid.py --experiment_name realestate_lpips_depth --batch_size 4 --gpus 4 --GTA --lpips --depth --checkpoint_path logs/acid_gta/checkpoints/model_current.pth
+python experiment_scripts/train_acid.py --experiment_name acid_gta_lpips_depth --batch_size 4 --gpus 4 --GTA --lpips --depth --checkpoint_path logs/acid_gta/checkpoints/model_current.pth
 ```
 
 ## Evaluation 
