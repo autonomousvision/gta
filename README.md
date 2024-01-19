@@ -61,7 +61,8 @@ torchrun --standalone --nnodes 1 --nproc_per_node 4 train.py runs/clevrtr/GTA/gt
 ```
 torchrun --standalone --nnodes 1 --nproc_per_node 4 train.py runs/msn/GTA/gta/config.yaml  ${DATADIR} --seed=0 
 ```
-## Pretrained models
+
+## Pretrained models (will be uploaded soon)
 - CLEVR-TR: [link]()
 - MSN-Hard: [link]()
 
