@@ -18,6 +18,10 @@ The authors of Du et al.(CVPR2023) provide a small subset of the RealEstate10K d
 To download the full datasets for Realestate10k and ACID, please follow the README [here](./data_download/README.md). 
 Please extract the folder in the root directory of the repo.
 
+## Pretrained models
+- ACID: [link](https://drive.google.com/drive/folders/1uYIW5d-FGidUfC2dKxStmAc9fru63xTo)
+- RealEstate10K: [link](https://drive.google.com/drive/folders/17zvbSDeMJkVQ6bCDSgX4aXWSulI0aMH1)
+
 
 ## High-Level structure
 The code is organized as follows:
