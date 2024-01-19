@@ -70,7 +70,7 @@ torchrun --standalone --nnodes 1 --nproc_per_node 4 train.py runs/msn/GTA/gta_so
 ```
 
 ## Pretrained models (MSN-Hard pre-trained models will be uploaded soon)
-- CLEVR-TR: [link](https://drive.google.com/drive/folders/1C2rW9mfb6aBwk8cB4q2rTTJ48BUKWOpD)
+- CLEVR-TR: [link](https://drive.google.com/drive/folders/1YPhMpvrVFOgJhCMuyUQqrUx2YC25oLlh)
 - MSN-Hard: [link](https://drive.google.com/drive/folders/1HJUfXPnslRvDo2hez2GJ8tFh_O7Lk5iL) 
 
 # Evaluation of PSNR, SSIM and LPIPS
