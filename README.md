@@ -73,7 +73,7 @@ python experiment_scripts/render_unposed_traj.py --experiment_name vis_realestat
 
 ## Citation
 
-If you find GTA useful for your research/product, you can cite the following ICLR2024 paper:
+If you find GTA useful for your research/product, please consider citing the following ICLR2024 paper:
 ```bibtex
 @inproceedings{Miyato2024GTA,
           title={GTA: A Geometry-Aware Attention Mechanism for Multi-View Transformers},
