@@ -19,8 +19,8 @@ To download the full datasets for Realestate10k and ACID, please follow the READ
 Please extract the folder in the root directory of the repo.
 
 ## Pretrained models
-- ACID: [link](https://drive.google.com/drive/folders/1uYIW5d-FGidUfC2dKxStmAc9fru63xTo)
-- RealEstate10K: [link](https://drive.google.com/drive/folders/17zvbSDeMJkVQ6bCDSgX4aXWSulI0aMH1)
+- ACID: [link](https://drive.google.com/drive/folders/1urQpbR5wd9BREgKY6idOXRMInx9nca9k)
+- RealEstate10K: [link](https://drive.google.com/drive/folders/1xmMphAbZeqmtIz-KeNUP3_KrLbOUmo60)
 
 
 ## High-Level structure
