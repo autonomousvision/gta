@@ -344,8 +344,8 @@ def multihead_geometric_transform_attention(
         v: Tensor of shape [B, H, Nk*Tk, Cv] 
         attn_fn: Attnetion function that outpus f(QK) given QK. f is for example Softmax in vanilla transformer.
         f_dims: Dict which specifies dimensions of each geometric type
-        reps: Dict contains pre-computed represenation matrices ρ of each vector type 
-        trans_coeff: Scaler that adjust scale coeffs 
+        reps: Dict contains pre-computed representation matrices ρ
+        trans_coeff: Scaler that adjusts scale coeffs 
 
     Return:
         Tensor of shape [B, H, Nk*Tk, C]
