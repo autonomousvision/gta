@@ -66,6 +66,11 @@ torchrun --standalone --nnodes 1 --nproc_per_node 4 train.py runs/msn/GTA/gta/co
 python evaluate.py runs/clevrtr/GTA/gta/config.yaml ${DATADIR}/clevrtr --checkpoint_path=$PATH_TO_CHECKPOINT
 ```
 
+# Acknowledgements
+This repository is built on top of [SRT](https://github.com/stelzner/srt) and [OSRT](https://github.com/stelzner/osrt) created by @stelzner. We would like to thank him for his clean and well-organized codebase.
+
+
+
 # Citation
 ```bibtex
 @inproceedings{Miyato2024GTA,
