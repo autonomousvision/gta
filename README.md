@@ -57,6 +57,10 @@ gsutil -m cp -r gs://kubric-public/tfds/kubric_frames/multi_shapenet_conditional
 <img width="800" alt="gta_mech" src="https://github.com/autonomousvision/gta/assets/11573649/de09e2d9-1eb1-4833-981b-3ef11c1c5fa3">
 </p>
 
+## *Pretrained models (MSN-Hard pre-trained models will be uploaded soon)
+- CLEVR-TR: [link](https://drive.google.com/drive/folders/1YPhMpvrVFOgJhCMuyUQqrUx2YC25oLlh)
+- MSN-Hard: [link](https://drive.google.com/drive/folders/1HJUfXPnslRvDo2hez2GJ8tFh_O7Lk5iL) 
+
 # Training
 
 ### CLEVR-TR
@@ -69,9 +73,6 @@ torchrun --standalone --nnodes 1 --nproc_per_node 4 train.py runs/clevrtr/GTA/gt
 torchrun --standalone --nnodes 1 --nproc_per_node 4 train.py runs/msn/GTA/gta_so3/config.yaml  ${DATADIR} --seed=0 
 ```
 
-## Pretrained models (MSN-Hard pre-trained models will be uploaded soon)
-- CLEVR-TR: [link](https://drive.google.com/drive/folders/1YPhMpvrVFOgJhCMuyUQqrUx2YC25oLlh)
-- MSN-Hard: [link](https://drive.google.com/drive/folders/1HJUfXPnslRvDo2hez2GJ8tFh_O7Lk5iL) 
 
 # Evaluation of PSNR, SSIM and LPIPS
 ```
