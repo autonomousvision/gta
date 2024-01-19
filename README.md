@@ -31,6 +31,11 @@ pip3 install -r requirements.txt
 
 ## 2. Download dataset
 
+```
+export DATADIR=<path_to_datadir>
+mkdir -p $DATADIR
+```
+
 ### CLEVR-TR 
 
 Download the dataset from this [link](https://drive.google.com/file/d/1iT3LjOPm1etcLKs7nVoHhYWU6qR1PdRG/view?usp=drive_link) and place it under `$DATADIR`
@@ -40,7 +45,6 @@ Download the dataset from this [link](https://drive.google.com/file/d/1iT3LjOPm1
 
 ### MultiShapeNet Hard (MSN-Hard)
 ```
-mkdir -p $DATADIR
 gsutil -m cp -r gs://kubric-public/tfds/kubric_frames/multi_shapenet_conditional/2.8.0/ ${DATADIR}/multi_shapenet_frames/
 ```
 
