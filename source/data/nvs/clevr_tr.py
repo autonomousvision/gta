@@ -340,9 +340,9 @@ class CLEVRTR(Dataset):
         result = {
             # [1, 3, h, w]
             'input_images':         input_images.transpose(0, 3, 1, 2),
-            'input_camera_pos':     input_camera_pos,     # [1, 3]
-            'input_rays':           input_rays,           # [1, h, w, 3]
-            # [1, h, w, self.max_num_entities]
+            'input_camera_pos':     input_camera_pos,     # [n_input_views, 3]
+            'input_rays':           input_rays,           # [n_input_views, h, w, 3]
+            # [n_input_views, h, w, self.max_num_entities]
             'input_masks':          input_masks,
             # [p, 3] or [n_views, p, 3]
             'target_pixels':        target_pixels,
@@ -359,27 +359,19 @@ class CLEVRTR(Dataset):
             result['transform'] = canonical_extrinsic     # [3, 4] (optional)
 
         if self.return_transform:
-            result['target_transforms'] = target_transforms
-            result['target_coord'] = target_coord
-            result['input_coord'] = input_coord
+            result['target_transforms'] = target_transforms # [n_views, 4, 4 ]
+            result['target_coord'] = target_coord # [n_views, p, 3]
+            result['input_coord'] = input_coord # [n_views, p, 2]
         result['input_transforms'] = input_transforms
 
         if self.return_target_transform:
-            result['target_transforms'] = target_transforms
+            result['target_transforms'] = target_transforms # [n_views, 4, 4]
     
         if self.return_org_rays:
-            result['input_org_rays'] = input_org_rays
+            result['input_org_rays'] = input_org_rays # [n_views, h, w, 3]
         
         if self.return_org_images:
-            result['org_input_images'] = org_input_images
-
-        if self.load_depth:
-            #depth = np.asarray(imageio.imread(
-            #    os.path.join(self.dir, 'depths', f'depths_{scene_idx}_{input_view_idx[0]}.tiff')))[..., 0]
-            depth = np.asarray(cv2.imread(
-                os.path.join(self.dir, 'depths', f'depths_{scene_idx}_{input_view_idx[0]}.tiff'),
-                cv2.IMREAD_UNCHANGED))
-            result['input_depths'] = depth
+            result['org_input_images'] = org_input_images # [n_views, h, w, 3]
 
             
         return result

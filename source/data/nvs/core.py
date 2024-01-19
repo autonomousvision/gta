@@ -1,8 +1,7 @@
 import numpy as np
 
 import os
-
-from source.data import nvs as nvsdata
+import source.data.nvs as nvsdata
 
 
 def get_dataset(mode, cfg, max_len=None, full_scale=None):
