@@ -20,9 +20,11 @@
 </p>
 
 Official reproducing code of our ICLR2024 work: "GTA: A Geometry-Aware Attention Mechanism for Multi-view Transformers", a simple way to make your multi-view transformer more expressive!
+[Here](https://github.com/autonomousvision/gta/blob/main/source/utils/gta.py) you can find the code of GTA.
 
 This codebase is for the CLEVR-TR and MSN-Hard experiments in the paper; if you want to see the ACID and RealEstate codes, switch to [this branch](https://github.com/autonomousvision/gta/tree/crsrndr).
 Please feel free to ask us if you have any questions about the paper or the code.
+
 
 # Setup
 
