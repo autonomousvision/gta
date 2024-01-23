@@ -7,7 +7,8 @@ from typing import Tuple
 import source.utils.visualize as vis
 from source.utils.common import mse2psnr, reduce_dict, gather_all
 from source.utils import nerf
-from source.utils.common import get_rank, get_world_size, make_2dcoord
+from source.utils.common import get_rank, get_world_size
+from source.utils.gta import make_2dcoord
 from source.models_nvs import TransformingSRT
 
 import os

@@ -1,6 +1,7 @@
 import torch
 from source.utils.nerf import get_extrinsic, transform_points
-from source.utils.common import get_rank, get_world_size, make_2dcoord
+from source.utils.common import get_rank, get_world_size
+from source.utils.gta import make_2dcoord
 from torch.utils.data import get_worker_info, IterableDataset
 import numpy as np
 from scipy.spatial.transform import Rotation as R

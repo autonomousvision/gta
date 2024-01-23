@@ -8,7 +8,7 @@ from source.decoder import ImprovedSRTDecoder
 from einops import rearrange, reduce, repeat
 from source.utils.wigner_d import rotmat_to_wigner_d_matrices
 from source.utils.nerf import get_vertical_rays, transform_points_torch
-from source.utils.common import scale_mask
+from source.utils.gta import scale_mask
 
 
 class SRT(nn.Module):

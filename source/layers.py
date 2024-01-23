@@ -3,7 +3,7 @@ import torch.nn as nn
 from torch.nn import functional as F
 from torch.nn import init
 from source.utils.nerf import get_vertical_rays
-from source.utils.common import multihead_geometric_transform_attention, multihead_vecrep_attention
+from source.utils.gta import multihead_geometric_transform_attention, multihead_vecrep_attention
 import numpy as np
 
 import math

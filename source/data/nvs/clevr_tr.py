@@ -7,11 +7,10 @@ from torch.utils.data import Dataset
 import os
 import glob
 import json
-from source.utils.common import make_2dcoord, make_2dimgcoord
+from source.utils.gta import make_2dcoord, make_2dimgcoord
 from pyquaternion import Quaternion
 from scipy.spatial.transform import Rotation as R
 from source.utils.nerf import get_camera_rays, get_extrinsic, transform_points, get_rays
-import cv2
 
 def SE3_to_lie(SE3):
     """Convert an element of SE(3) to the coefficients of its Lie algebra representation."""

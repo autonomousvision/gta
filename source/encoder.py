@@ -2,7 +2,8 @@ import numpy as np
 import torch
 import torch.nn as nn
 from source.layers import RayPosEncoder, Transformer
-from source.utils.common import positionalencoding2d, downsample, rigid_transform, make_SO2mats, ray2rotation, make_T2mats
+from source.utils.common import positionalencoding2d, downsample, rigid_transform
+from source.utils.gta import make_SO2mats, ray2rotation, make_T2mats
 from source.utils.wigner_d import rotmat_to_wigner_d_matrices
 from source.utils.nerf import transform_points_torch
 from torch.nn import init

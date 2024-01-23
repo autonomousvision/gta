@@ -5,7 +5,8 @@ from source.utils.nerf import get_vertical_rays, transform_points_torch
 from source.utils.common import positionalencoding2d_given_coord
 from source.layers import RayPosEncoder, Transformer, SRTLinear
 from source.utils import nerf
-from source.utils.common import rigid_transform, make_SO2mats, rotmat_to_wigner_d_matrices, ray2rotation, downsample, make_T2mats
+from source.utils.common import rigid_transform,  rotmat_to_wigner_d_matrices, downsample
+from source.utils.gta import make_SO2mats, ray2rotation, make_T2mats
 from einops import rearrange
 from source.utils.gbt import get_plucker_parameterization, plucker_dist, positional_encoding
 from source.utils.frustum_posemb import generate_frustum_pixel_points
