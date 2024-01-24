@@ -1,4 +1,3 @@
-
 # Geometric Transform Attention 
 
 This codebase is for reproducing results of our ICLR2024 paper on the ACID and RealEstate10k datasets and is built on [the original codebase of Du et al.(CVPR2023)](https://github.com/yilundu/cross_attention_renderer).
