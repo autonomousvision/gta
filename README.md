@@ -8,6 +8,7 @@ You can install the packages used in this codebase using the following command
 ```
 conda create -n gta_crsrndr python=3.9
 conda activate gta_crsrndr
+git checkout crsrndr
 pip install -r requirements.txt
 conda install h5py
 ```
