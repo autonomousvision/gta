@@ -159,10 +159,6 @@ class ImprovedSRTEncoder(nn.Module):
             dropout=dropout,
             attn_args=attn_args)
 
-        if self.is_gta:
-            if 'sep' in self.attn_args['f_dims'] and self.attn_args['f_dims']['sep'] > 0:
-                self.trans_coeff = nn.Parameter(torch.Tensor([0.01]))
-
         self.lin_out = nn.Linear(
             attdim, dim_out) if dim_out is not None else lambda x: x
 
