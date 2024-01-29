@@ -31,65 +31,7 @@ class SRTConvBlock(nn.Module):
 
     def forward(self, x):
         return self.layers(x)
-
-
-class PatchfyConv(nn.Module):
-
-    def __init__(self,
-                 dim=768,
-                 num_conv_blocks=3,
-                 pos_start_octave=0,
-                 downsample=True,
-                 ):
-        super().__init__()
-        self.ray_encoder = RayPosEncoder(pos_octaves=15, pos_start_octave=pos_start_octave,
-                                         ray_octaves=15)
-        in_dims = []
-        out_dims = []
-        h_dims = []
-        for i in range(num_conv_blocks):
-            if i == 0:
-                in_dims.append(183)
-                h_dims.append(96)
-                out_dims.append(dim // (2**(num_conv_blocks-1))
-                                if downsample else dim)
-            if i > 0:
-                if downsample:
-                    in_dims.append(dim // (2**(num_conv_blocks-i)))
-                    h_dims.append(None)
-                    out_dims.append(dim // (2**(num_conv_blocks-i-1)))
-                else:
-                    in_dims.append(dim)
-                    h_dims.append(dim//2)
-                    out_dims.append(dim)
-
-        conv_blocks = []
-        for i in range(num_conv_blocks):
-            conv_blocks.append(SRTConvBlock(
-                idim=in_dims[i], hdim=h_dims[i], odim=out_dims[i], downsample=downsample))
-
-        self.conv_blocks = nn.Sequential(*conv_blocks)
-
-        self.per_patch_linear = nn.Conv2d(dim, dim, kernel_size=1)
-
-    def forward(self, images, camera_pos, rays):
-        batch_size, num_images = images.shape[:2]
-
-        x = images.flatten(0, 1)
-        camera_pos = camera_pos.flatten(0, 1)
-        rays = rays.flatten(0, 1)
-
-        ray_enc = self.ray_encoder(camera_pos, rays)
-        x = torch.cat((x, ray_enc), 1)
-        x = self.conv_blocks(x)
-        x = self.per_patch_linear(x)
-        x = x.flatten(2, 3).permute(0, 2, 1)
-
-        patches_per_image, channels_per_patch = x.shape[1:]
-        x = x.reshape(batch_size, num_images *
-                      patches_per_image, channels_per_patch)
-        return x
-
+        
 
 class ImprovedSRTEncoder(nn.Module):
     """
@@ -176,30 +118,6 @@ class ImprovedSRTEncoder(nn.Module):
                 nn.Linear(indim, attdim*2),
                 nn.ReLU(),
                 nn.Linear(attdim*2, attdim))
-
-    def upsample_tokens(self, tokens, h, w, k, extras):
-        """
-        Args:
-            tokens: Tensor of shape: [B, Nk*h*w, C]
-        Return
-            Tensor of shape: [B, (2**k*h)*(2**k*w), C]
-        """
-        input_coord = extras['input_coord']
-        Nk = input_coord.shape[1]
-        factor = 2**k
-        tokens = rearrange(tokens, 'b (Nk h w) (f1 f2 c) ->b (Nk h f1 w f2) c',
-                           Nk=Nk, h=h, w=w, f1=factor, f2=factor)
-        pos_w = torch.arange(0., 2**k)/(2**k) / (h)
-        pos_h = torch.arange(0., 2**k)/(2**k) / (w)
-        local_coord = torch.meshgrid([pos_h, pos_w], indexing='ij')
-        local_coord = torch.stack(local_coord, -1)
-        local_coord = repeat(
-            local_coord, 'f1 f2 c -> (h f1 w f2) c', h=h, w=w).to(tokens.device)
-        upsampled_coord = repeat(
-            input_coord, 'B Nk (h w) c -> B Nk (h f1 w f2) c', f1=2**k, f2=2**k, h=h, w=w)
-        extras['input_coord'] = upsampled_coord + local_coord[None]
-        return tokens
-
 
     def add_ray_embs_to_extras(self, x, rays, extras, downsample_factor=3):
         # For RePAST
