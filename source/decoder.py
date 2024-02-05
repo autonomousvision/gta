@@ -298,9 +298,9 @@ class ImprovedSRTDecoder(nn.Module):
                 # [B, Nq, T, 4, 4] R: ray direction-> base ray (extrinsic)
                 R = ray2rotation(target_rays, return_4x4=True)
                 se3rep = torch.einsum(
-                    'bnij,bntjk->bntik', se3rep, R.transpose(-2, -1))  # mul from right
+                    'bnij,bntjk->bntik', se3rep, R)  # mul from right
                 extrinsic = torch.einsum(
-                    'bntij,bnjk->bntik',  R, extrinsic)  # mul from left
+                    'bntij,bnjk->bntik',  R.transpose(-2, -1), extrinsic)  # mul from left
                 extras['se3fn'] = lambda A, x: torch.einsum(
                     'bntij,bhntcj->bhntci', A, x)
             else:
@@ -318,9 +318,9 @@ class ImprovedSRTDecoder(nn.Module):
                     # [B, Nq, T, 4, 4]
                     R = ray2rotation(input_rays, return_4x4=True)
                     se3rep = torch.einsum(
-                        'bnij,bntjk->bntik', se3rep, R.transpose(-2, -1))  # mul from right
+                        'bnij,bntjk->bntik', se3rep, R)  # mul from right
                     extrinsic = torch.einsum(
-                        'bntij,bnjk->bntik',  R, extrinsic)  # mul from left
+                        'bntij,bnjk->bntik',  R.transpose(-2, -1), extrinsic)  # mul from left
                 extras['se3rep_k'] = se3rep
             flattened = extrinsic.repeat_interleave(
                 NqTq//extrinsic.shape[1], 1).transpose(-2, -1).reshape(se3rep.shape[0], -1, 16)  # [B, T, 4*4]
@@ -356,7 +356,7 @@ class ImprovedSRTDecoder(nn.Module):
             target_rays = extras['target_rays'].reshape(B, Nq, -1, 3)
             R = ray2rotation(target_rays)  # [B, Nq, T, 4, 4]
             R_q = torch.einsum('bnij,bntjk->bntik', R_q,
-                               R.transpose(-2, -1))  # mul from right
+                               R)  # mul from right
             D_q = rotmat_to_wigner_d_matrices(n_degs, R_q.flatten(0, 2))[1:]
             for i, D in enumerate(D_q):
                 D_q[i] = D.reshape(B, Nq, -1, D.shape[-2], D.shape[-1])

@@ -23,9 +23,8 @@ def ray2rotation(rays, center=[0.0, 0.0, 1.0], return_4x4=False):
     rays = F.normalize(rays, p=2, dim=-1)
     center_vector = F.normalize(center_vector, p=2, dim=-1)
 
-    # center x rays
+    # rays x center
     axis = torch.cross(rays, center_vector.expand_as(rays), dim=-1)
-    #axis = torch.cross(center_vector.expand_as(rays), rays, dim=-1)
     axis_norm = torch.norm(axis, p=2, dim=-1, keepdim=True)
     axis = axis / axis_norm.clamp(min=1e-6)
 

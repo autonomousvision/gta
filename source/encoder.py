@@ -224,9 +224,9 @@ class ImprovedSRTEncoder(nn.Module):
                 # [B, Nq, T, 4, 4]
                 R = ray2rotation(input_rays, return_4x4=True)
                 se3rep = torch.einsum(
-                    'bnij,bntjk->bntik', se3rep, R.transpose(-2, -1))  # mul from right
+                    'bnij,bntjk->bntik', se3rep, R)  # mul from right
                 extrinsic = torch.einsum(
-                    'bntij,bnjk->bntik',  R, extrinsic)  # mul from left
+                    'bntij,bnjk->bntik',  R.transpose(-2, -1), extrinsic)  # mul from left
                 extras['se3fn'] = lambda A, x: torch.einsum(
                     'bntij,bhntcj->bhntci', A, x)
             else:
@@ -271,7 +271,7 @@ class ImprovedSRTEncoder(nn.Module):
                 extras['input_rays'], 3).reshape(B, Nq, -1, 3)
             R = ray2rotation(input_rays)  # [B, Nq, T, 4, 4]
             R_q = torch.einsum('bnij,bntjk->bntik', R_q,
-                               R.transpose(-2, -1))  # mul from right
+                               R)  # mul from right
             D_q = rotmat_to_wigner_d_matrices(n_degs, R_q.flatten(0, 2))[1:]
             for i, D in enumerate(D_q):
                 D_q[i] = D.reshape(B, Nq, -1, D.shape[-2], D.shape[-1])
