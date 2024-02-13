@@ -260,35 +260,6 @@ class ImprovedSRTEncoder(nn.Module):
             extras['so3fn'] = lambda A, x: torch.einsum(
                 'bnij,bhnkj->bhnki', A, x)
 
-        if 'sep' in f_dims and f_dims['sep'] > 0:
-            extras['trans_coeff'] = self.trans_coeff
-            se3rep = torch.linalg.inv(
-                extras['input_transforms'])  # [B, Nq, 4, 4]
-            n_degs = attn_kwargs['so3']
-            R_q = se3rep[..., :3, :3]
-            B, Nq = se3rep.shape[0], se3rep.shape[1]
-            input_rays = downsample(
-                extras['input_rays'], 3).reshape(B, Nq, -1, 3)
-            R = ray2rotation(input_rays)  # [B, Nq, T, 4, 4]
-            R_q = torch.einsum('bnij,bntjk->bntik', R_q,
-                               R)  # mul from right
-            D_q = rotmat_to_wigner_d_matrices(n_degs, R_q.flatten(0, 2))[1:]
-            for i, D in enumerate(D_q):
-                D_q[i] = D.reshape(B, Nq, -1, D.shape[-2], D.shape[-1])
-            extras['so3rep_q'] = extras['so3rep_k'] = D_q
-            extras['so3fn'] = lambda A, x: torch.einsum(
-                'bntij,bhntkjdm->bhntkidm', A, x)
-
-            coord = se3rep[..., :3, 3]  # [B, Nq, 3]
-            coord = extras['trans_coeff'] * coord
-            so2rep = make_SO2mats(coord,
-                                  nfreqs=attn_kwargs['so2'],
-                                  max_freqs=attn_kwargs['max_freqs'])  # [B, Nq, deg, 3, 2, 2]
-            so2rep = so2rep.flatten(-4, -3)  # [B, Nq, deg*3, 2, 2]
-            extras['so2rep_q'] = extras['so2rep_k'] = so2rep
-            extras['so2fn'] = lambda A, x: torch.einsum(
-                'bndlm,bhntkjdm->bhntkjdl', A, x)
-
         extras['flattened_rep_q'] = extras['flattened_rep_k'] = torch.cat(
             flattened_reps, -1)  # 16 + 2*freqs*2*2
         extras['flattened_invrep_q'] = torch.cat(flattened_invreps, -1)
