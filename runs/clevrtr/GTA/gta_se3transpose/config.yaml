@@ -28,7 +28,7 @@ model:
         method:
           name: 'gta'
           args:
-            se3_transpose: True
+            se3rep_transpose: True
             so2: 8
             max_freq_h: 1
             max_freq_w: 1
@@ -47,7 +47,7 @@ model:
         method:
           name: 'gta'
           args:
-            se3_transpose: True
+            se3rep_transpose: True
             so2: 8
             max_freq_h: 1
             max_freq_w: 1
