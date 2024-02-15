@@ -291,7 +291,16 @@ class ImprovedSRTDecoder(nn.Module):
 
         if 'se3' in f_dims and f_dims['se3'] > 0:
             extrinsic = extras['target_transforms']
+
+            se3rep_transpose = attn_kwargs.get('se3rep_transpose', False)
+            if se3rep_transpose:
+                assert not('ray_to_se3' in attn_kwargs and attn_kwargs['ray_to_se3'])
+                print("""
+                    SE3Rep is transposed.
+                """)
+
             se3rep = torch.linalg.inv(extrinsic)  # [B, Nq, 4, 4]
+
             if 'ray_to_se3' in attn_kwargs and attn_kwargs['ray_to_se3']:
                 B, Nq = se3rep.shape[0], se3rep.shape[1]
                 target_rays = extras['target_rays'].reshape(B, Nq, -1, 3)
@@ -304,8 +313,13 @@ class ImprovedSRTDecoder(nn.Module):
                 extras['se3fn'] = lambda A, x: torch.einsum(
                     'bntij,bhntcj->bhntci', A, x)
             else:
-                extras['se3fn'] = lambda A, x: torch.einsum(
-                    'bnij,bhntcj->bhntci', A, x)
+                if se3rep_transpose:
+                    extras['se3fn'] = lambda A, x: torch.einsum(
+                        'bnij,bhntcj->bhntci', A.transpose(-2,-1), x)
+                else:
+                    extras['se3fn'] = lambda A, x: torch.einsum(
+                        'bnij,bhntcj->bhntci', A, x)
+                        
             extras['se3rep_q'] = se3rep
             extras['inv_se3rep_q'] = extrinsic
             if not 'se3rep_k' in extras:

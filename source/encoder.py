@@ -182,6 +182,7 @@ class ImprovedSRTEncoder(nn.Module):
 
     def pre_compute_reps(self, attn_kwargs, extras):
         f_dims = attn_kwargs['f_dims']
+        
         flattened_reps = []
         flattened_invreps = []
         if 'so2' in f_dims and f_dims['so2'] > 0:
@@ -196,7 +197,8 @@ class ImprovedSRTEncoder(nn.Module):
             NqTq = so2rep.shape[1]
             extras['so2rep_q'] = extras['so2rep_k'] = so2rep  # [B, T, C, 2, 2]
             extras['so2fn'] = lambda A, x: torch.einsum(
-                'btcij,bhtcj->bhtci', A, x)
+            'btcij,bhtcj->bhtci', A, x)
+
             flattened = so2rep.reshape(
                 so2rep.shape[0], so2rep.shape[1], -1)  # [B, T, C*2*2]
             flattened_reps.append(flattened)
@@ -217,6 +219,14 @@ class ImprovedSRTEncoder(nn.Module):
         if 'se3' in f_dims and f_dims['se3'] > 0:
             extrinsic = extras['input_transforms']
             se3rep = torch.linalg.inv(extrinsic)  # [B, Nq, 4, 4]
+
+            se3rep_transpose = attn_kwargs.get('se3rep_transpose', False)
+            if se3rep_transpose:
+                assert not('ray_to_se3' in attn_kwargs and attn_kwargs['ray_to_se3'])
+                print("""
+                    SE3Rep is transposed.
+                """)
+
             if 'ray_to_se3' in attn_kwargs and attn_kwargs['ray_to_se3']:
                 B, Nq = se3rep.shape[0], se3rep.shape[1]
                 input_rays = downsample(
@@ -230,8 +240,12 @@ class ImprovedSRTEncoder(nn.Module):
                 extras['se3fn'] = lambda A, x: torch.einsum(
                     'bntij,bhntcj->bhntci', A, x)
             else:
-                extras['se3fn'] = lambda A, x: torch.einsum(
-                    'bnij,bhntcj->bhntci', A, x)
+                if se3rep_transpose:
+                    extras['se3fn'] = lambda A, x: torch.einsum(
+                        'bnij,bhntcj->bhntci', A.transpose(-2,-1), x)
+                else:
+                    extras['se3fn'] = lambda A, x: torch.einsum(
+                        'bnij,bhntcj->bhntci', A, x)
             extras['se3rep_q'] = extras['se3rep_k'] = se3rep
             extras['inv_se3rep_q'] = extrinsic
 
