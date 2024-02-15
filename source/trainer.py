@@ -164,8 +164,7 @@ class SRTTrainer:
                 extras['target_coord'] = coord[:, None, i:i+max_num_rays]
                 img[:, i:i+max_num_rays], n_extras = self.model.decode(
                     z=z, x=camera_pos[:, None, i:i+max_num_rays], 
-                    rays=rays[:, None, i:i+max_num_rays], transforms=transforms[:, None],
-                    extras=extras)
+                    rays=rays[:, None, i:i+max_num_rays], extras=extras)
             else:
                 img[:, i:i+max_num_rays], n_extras = self.model.decoder(
                     z=z, x=camera_pos[:, i:i+max_num_rays], rays=rays[:, i:i+max_num_rays], extras=extras)
