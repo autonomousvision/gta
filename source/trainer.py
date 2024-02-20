@@ -134,7 +134,7 @@ class SRTTrainer:
         return {'psnr': psnr, 'mse': mse, **loss_terms}
 
 
-    def render_image(self, z, camera_pos, rays, transforms=None, extras={}):
+    def render_image(self, z, camera_pos, rays, extras={}):
         """
         Args:
             z [n, k, c]: set structured latent variables
@@ -284,7 +284,7 @@ class SRTTrainer:
                     target_transforms = None
 
                 img, n_extras = self.render_image(
-                    z, camera_pos_rot, rays_rot, target_transforms, extras)
+                    z, camera_pos_rot, rays_rot, extras)
                 
                 columns.append(
                     (f'render {angle_deg}°', img.cpu().numpy(), 'image'))

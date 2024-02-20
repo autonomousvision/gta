@@ -221,11 +221,6 @@ class ImprovedSRTEncoder(nn.Module):
             se3rep = torch.linalg.inv(extrinsic)  # [B, Nq, 4, 4]
 
             se3rep_transpose = attn_kwargs.get('se3rep_transpose', False)
-            if se3rep_transpose:
-                assert not('ray_to_se3' in attn_kwargs and attn_kwargs['ray_to_se3'])
-                print("""
-                    SE3Rep is transposed.
-                """)
 
             if 'ray_to_se3' in attn_kwargs and attn_kwargs['ray_to_se3']:
                 B, Nq = se3rep.shape[0], se3rep.shape[1]
