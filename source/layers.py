@@ -210,7 +210,21 @@ class Attention(nn.Module):
                 out = (attn @ v)
                 return out, attn
 
-        self.attn_fn = AttnFn(self.scale)
+        class EuclidAttnFn(torch.nn.Module):
+            def __init__(self, scale):
+                self.scale = scale
+                super().__init__()
+                print("""Euclid Attention""")
+
+            def forward(self, q, k, v):
+                # sim(Q, K) = -0.5*||Q-K||^2 = Q'K - 0.5Q'Q - 0.5K'K
+                sim = q @ k.transpose(-1, -2)  - 0.5 * q.sum(-1)[..., None] - 0.5 * k.sum(-1)[..., None, :] 
+                attn = nn.Softmax(-1)(sim * self.scale / tau)
+                out = (attn @ v)
+                return out, attn
+
+        self.euclid = self.method_args.get('euclid_sim', False)
+        self.attn_fn = EuclidAttnFn(self.scale) if self.euclid else AttnFn(self.scale)
 
         # parse
         if self.method == 'repast':
@@ -269,7 +283,6 @@ class Attention(nn.Module):
                 self.linear_g = nn.Linear(16+180, dim)
                 self.linear_b = nn.Linear(16+180, dim)
         
-
         self.to_out = nn.Sequential(
             linear_module(inner_dim if not self.rpe else inner_dim +
                       self.heads*self.q_bias.shape[-1], dim),
@@ -411,7 +424,8 @@ class Attention(nn.Module):
                     f_dims=self.method_args['f_dims'],
                     reps=extras,
                     trans_coeff=self.trans_coeff if not self.method_args.get('elementwise_mul', False) else None,
-                    v_transform=v_transform)
+                    v_transform=v_transform,
+                    euclid=self.euclid)
                 out = rearrange(out, 'b h n d -> b n (h d)')
                 out = self.to_out(out)
             else:

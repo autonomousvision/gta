@@ -83,7 +83,7 @@ def make_2dimgcoord(H, W):
     return np.stack([x_grid.flatten(), y_grid.flatten()], -1).reshape(H, W, 2)
 
 
-def homogenisation(V, trans_coeff):
+def homogenisation(V, trans_coeff=1.0):
     shape = V.shape
     _vec = np.ones([1, ]*len(shape))
     _vec = torch.Tensor(_vec).to(V.device)
@@ -146,7 +146,7 @@ def make_T2mats(coord):
 
 def multihead_geometric_transform_attention(
         q, k, v, attn_fn, f_dims, reps, trans_coeff=1.0,
-        v_transform=True, **kwargs):
+        v_transform=True, euclid=False, **kwargs):
     """
     Args:
         q: Tensor of shape [B, H, Nq*Tq, C] where Nq and Tq is the num of query views and image patch tokens 
@@ -156,6 +156,8 @@ def multihead_geometric_transform_attention(
         f_dims: Dict which specifies dimensions of each geometric type
         reps: Dict contains pre-computed representation matrices ρ
         trans_coeff: Scaler that adjusts scale coeffs 
+        v_transform: apply transforms to V or not 
+        euclid: If True, use the squared euclid distance for QK-similarity instead of the dot-product similarity.
 
     Return:
         Tensor of shape [B, H, Nk*Tk, C]
@@ -190,26 +192,35 @@ def multihead_geometric_transform_attention(
         inv_c_q = reps['inv_se3rep_q']
         for i in range(len(c_q.shape[:-2])):
             msk.unsqueeze(0)
-        c_q, c_k = c_q*msk, c_k*msk
-        inv_c_q = inv_c_q*msk
-
+        c_q, c_k = c_q*msk, c_k*msk # [B, Nq, 4, 4]
+        inv_c_q = inv_c_q*msk # [B, Nq, 4, 4]
         Nq, Nk = c_q.shape[1], c_k.shape[1]
         (q_se3, k_se3, v_se3) = map(
-            lambda x: x[..., st_dims['se3']:ed_dims['se3']], (q, k, v))
+                lambda x: x[..., st_dims['se3']:ed_dims['se3']], (q, k, v))
         q_se3_shape, k_se3_shape, v_se3_shape = q_se3.shape, k_se3.shape, v_se3.shape
-        # [B, H, Nq, Tq, C/4, 4]
-        q_se3 = q_se3.reshape(B, H, Nq, Tq//Nq, -1, 4)
-        # [B, H, Nk, Tk, C/4, 4]
-        k_se3 = k_se3.reshape(B, H, Nk, Tk//Nk, -1, 4)
-        # [B, H, Nk, Tk, C/4, 4]
-        v_se3 = v_se3.reshape(B, H, Nk, Tk//Nk, -1, 4)
+        if euclid:
+            q_se3 = q_se3.reshape(B, H, Nq, Tq//Nq, -1, 3) # [B, H, Nq, Tq, C/3, 3]
+            k_se3 = k_se3.reshape(B, H, Nk, Tk//Nk, -1, 3) # [B, H, Nk, Tk, C/3, 3]
+            v_se3 = v_se3.reshape(B, H, Nk, Tk//Nk, -1, 3) # [B, H, Nk, Tk, C/3, 3]
+            (q_se3, k_se3, v_se3) = map(
+                lambda x: homogenisation(x), (q_se3, k_se3, v_se3))
+            fn_se3 = reps['se3fn']
+            qs['se3'] = fn_se3(c_q, q_se3)[..., :-1].reshape(q_se3_shape)
+            ks['se3'] = fn_se3(c_k, k_se3)[..., :-1].reshape(k_se3_shape)
+            vs['se3'] = (fn_se3(c_k, v_se3)[..., :-1]
+                        if v_transform else v_se3[..., :-1]).reshape(v_se3_shape)
+            
+        else:
+            q_se3_shape, k_se3_shape, v_se3_shape = q_se3.shape, k_se3.shape, v_se3.shape
+            q_se3 = q_se3.reshape(B, H, Nq, Tq//Nq, -1, 4) # [B, H, Nq, Tq, C/4, 4]
+            k_se3 = k_se3.reshape(B, H, Nk, Tk//Nk, -1, 4) # [B, H, Nk, Tk, C/4, 4]
+            v_se3 = v_se3.reshape(B, H, Nk, Tk//Nk, -1, 4) # [B, H, Nk, Tk, C/4, 4]
 
-        fn_se3 = reps['se3fn']
-        qs['se3'] = fn_se3(inv_c_q.transpose(-2, -1),
-                           q_se3).reshape(q_se3_shape)
-        ks['se3'] = fn_se3(c_k, k_se3).reshape(k_se3_shape)
-        vs['se3'] = (fn_se3(c_k, v_se3)
-                     if v_transform else v_se3).reshape(v_se3_shape)
+            fn_se3 = reps['se3fn']
+            qs['se3'] = fn_se3(inv_c_q.transpose(-2, -1), q_se3).reshape(q_se3_shape)
+            ks['se3'] = fn_se3(c_k, k_se3).reshape(k_se3_shape)
+            vs['se3'] = (fn_se3(c_k, v_se3)
+                        if v_transform else v_se3).reshape(v_se3_shape)
 
     if 'so3' in f_dims and f_dims['so3'] > 0:
         D_q = reps['so3rep_q']
@@ -292,10 +303,13 @@ def multihead_geometric_transform_attention(
         if 'triv' in f_dims and f_dims['triv'] > 0:
             outs['triv'] = out[..., st_dims['triv']:ed_dims['triv']]
         if 'se3' in f_dims and f_dims['se3'] > 0:
-            outs['se3'] = fn_se3(inv_c_q,
-                                 out[..., st_dims['se3']:ed_dims['se3']
-                                     ].reshape(B, H, Nq, Tq//Nq, -1, 4)
-                                 ).reshape(q_se3_shape)
+            if euclid:
+                out_se3 = homogenisation(out[..., st_dims['se3']:ed_dims['se3']].reshape(B, H, Nq, Tq//Nq, -1, 3))
+                outs['se3'] = fn_se3(inv_c_q, out_se3)[..., :-1].reshape(q_se3_shape)
+            else:
+                outs['se3'] = fn_se3(
+                    inv_c_q, out[..., st_dims['se3']:ed_dims['se3']].reshape(B, H, Nq, Tq//Nq, -1, 4)
+                    ).reshape(q_se3_shape)
 
         if 'so3' in f_dims and f_dims['so3'] > 0:
             out_so3 = out[..., st_dims['so3']:ed_dims['so3']
