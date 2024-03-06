@@ -239,7 +239,6 @@ if __name__ == '__main__':
 
     if args.wandb:
         import wandb
-        wandb.login(key='802f89688040242c7511a529e938e730df4d351c')
         if run_id is None:
             run_id = wandb.util.generate_id()
             print(f'Sampled new wandb run_id {run_id}.')

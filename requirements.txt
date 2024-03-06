@@ -15,3 +15,6 @@ opencv-python
 einops
 sunds
 gsutil
+scikit-image
+pytorch_msssim
+lpips
