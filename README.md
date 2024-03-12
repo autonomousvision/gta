@@ -83,7 +83,7 @@ python evaluate.py runs/msn/GTA/gta_so3/config.yaml ${DATADIR} $PATH_TO_CHECKPOI
 ```
 
 # Acknowledgements
-This repository is built on top of [SRT](https://github.com/stelzner/srt) and [OSRT](https://github.com/stelzner/osrt) created by @stelzner. We would like to thank him for his clean and well-organized codebase.
+This repository is built on top of [SRT](https://github.com/stelzner/srt) and [OSRT](https://github.com/stelzner/osrt) created by @stelzner. We would like to thank him for his open-source contribution of the SRT models.
 We also thank @lucidrains for providing the values of J matrices, which are needed to compute the irreps of SO(3) efficiently.
  
 
