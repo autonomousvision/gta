@@ -15,7 +15,7 @@
 
 
   <p align="center">
-  <img width="800" alt="gta_mech" src="https://github.com/autonomousvision/gta/assets/11573649/b12ce677-df83-487c-ba10-06d844048a46">
+  <img width="180" alt="gta_mech" src="https://github.com/autonomousvision/gta/assets/11573649/939bc44b-3fde-48b8-96ce-4f68c6c55ccd">
   </p>
 </p>
 
