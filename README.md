@@ -21,10 +21,9 @@ conda env create -f environment.yml
 conda activate DiT
 ```
 
-
 **Pre-trained DiT + GTA checkpoints.**
-- [DiT+GTA at 2.5M-th iteration]()
-- [DiT+RoPE at 2.5M-th iteration]()  
+- [DiT+GTA at 2.5M-th iteration](https://drive.google.com/drive/folders/1-FoJHUQqn1ZXeA3g4Bko2iWnDu3k7OpC)
+- [DiT+RoPE at 2.5M-th iteration](https://drive.google.com/drive/folders/1W7tStpQVssNz5kNAmCKi7PgbuywbyML6) 
 
 ## Training
 ### Preparation Before Training
