@@ -49,8 +49,6 @@ def make_SO2mats(coord, nfreqs):
     return mat
 
 # GTA
-
-
 @torch.jit.script
 def rep_mul_x(rep, x):
     #  rep.shape=[T, F, 2, 2], x.shape=[B, H, T, F*2]
