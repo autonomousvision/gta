@@ -1,6 +1,6 @@
 # DiT + GTA
 
-[Diffusion transformer ](https://arxiv.org/abs/2212.09748) with [Geometric Transform Attention](https://openreview.net/forum?id=uJVHygNeSZ).
+[Diffusion transformers](https://arxiv.org/abs/2212.09748) with [Geometric Transform Attention](https://openreview.net/forum?id=uJVHygNeSZ).
 This codebase is built on [fast-DiT](https://github.com/chuanyangjin/fast-DiT) and [DiT](https://github.com/facebookresearch/DiT). We thank their open-source contributions.
 
 ## Setup
