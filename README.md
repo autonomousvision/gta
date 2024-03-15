@@ -21,7 +21,7 @@
 
 Official reproducing code of our ICLR2024 work: "GTA: A Geometry-Aware Attention Mechanism for Multi-view Transformers", a simple way to make your multi-view transformer more expressive! 
 
-(3/15/2024): In our original paper, we mainly focused on NVS tasks, but we found the GTA mechanism is also effective in the image generation task, which is a purely 2D image task. You can find the details in our camera-ready paper and the implementation at this [branch](https://github.com/autonomousvision/gta/tree/DiT)
+(3/15/2024): While we mainly focus on NVS tasks in the paper, the GTA mechanism is also effective for image generation, which is a purely 2D image task. You can find the experimental details in our camera-ready paper and the implementation at this [branch](https://github.com/autonomousvision/gta/tree/DiT).
 
 
 ## Contents
