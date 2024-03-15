@@ -59,8 +59,7 @@ similar (and sometimes slightly better) results compared to the JAX-trained mode
 | B/2+RoPE   | 2.5M        | 6.26                       | 
 | B/2+GTA    | 2.5M        | **5.87**  (6.2% relative improvment over RoPE)                 |
 
-These models were trained at 256x256 resolution; we used 4x A100s to train B/2
-here is computed with 250 DDPM sampling steps, with the `ema` VAE decoder and with guidance (`cfg-scale=1.5`). 
+These models were trained at 256x256 resolution; we used 4x A100s to train B/2. Here, FID is computed with 250 DDPM sampling steps, with the `ema` VAE decoder and with guidance (`cfg-scale=1.5`). 
 
 
 ## Evaluation (FID, Inception Score, etc.)
