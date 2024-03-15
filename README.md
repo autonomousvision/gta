@@ -33,7 +33,7 @@ This repository contains the following different codebases, and you can access e
 
 
 You can find the code of GTA for multi-view ViTs 
-[here](https://github.com/autonomousvision/gta/blob/main/source/utils/gta.py) and for image ViTs [here](https://github.com/autonomousvision/gta/blob/main/source/utils/gta.py). 
+[here](https://github.com/autonomousvision/gta/blob/main/source/utils/gta.py) and for image ViTs [here](https://github.com/autonomousvision/gta/blob/DiT/gta.py#L69). 
 
 Please feel free to reach out to us if you have any questions!
 
