@@ -19,12 +19,23 @@
   </p>
 </p>
 
-Official reproducing code of our ICLR2024 work: "GTA: A Geometry-Aware Attention Mechanism for Multi-view Transformers", a simple way to make your multi-view transformer more expressive!
-[Here](https://github.com/autonomousvision/gta/blob/main/source/utils/gta.py) you can find the code of GTA.
+Official reproducing code of our ICLR2024 work: "GTA: A Geometry-Aware Attention Mechanism for Multi-view Transformers", a simple way to make your multi-view transformer more expressive! 
 
-This codebase is for the CLEVR-TR and MSN-Hard experiments in the paper; if you want to reproduce the ACID and RealEstate results, switch to this [branch](https://github.com/autonomousvision/gta/tree/crsrndr).
-Please feel free to ask us if you have any questions about the paper or the code.
+(3/15/2024): In our original paper, we mainly focused on NVS tasks, but we found the GTA mechanism is also effective in the image generation task, which is a purely 2D image task. You can find the details in our camera-ready paper and the implementation at this [branch](https://github.com/autonomousvision/gta/tree/DiT)
 
+
+## Contents
+
+This repository contains the following different codebases, and you can access each of them by switching to the corresponding branch:
+- NVS experiments on CLEVR-TR and MSN-Hard (this branch)
+- NVS experiments on ACID and RealEstate ([link](https://github.com/autonomousvision/gta/tree/crsrndr))
+- ImageNet generation with Diffusion transformers (DiT) ([link](https://github.com/autonomousvision/gta/tree/DiT))
+
+
+You can find the code of GTA for multi-view ViTs 
+[here](https://github.com/autonomousvision/gta/blob/main/source/utils/gta.py) and for image ViTs [here](https://github.com/autonomousvision/gta/blob/main/source/utils/gta.py). 
+
+Please feel free to reach out to us if you have any questions!
 
 # Setup
 
