@@ -42,7 +42,7 @@ To launch DiT-B/2 (256x256) training with `N` GPUs on one node:
 # DiT + GTA
 accelerate launch train.py --multi_gpu --num_processes N --model DiT-B/2 --features-path /path/to/store/features --posenc=gta --image-size=256 --results-dir=outputs/GTA --epochs=500 --ckpt-every=250000
 # DiT + RoPE
-accelerate launch train.py --multi_gpu --num_processes N --model DiT-B/2 --features-path /path/to/store/features --posenc=rope --image-size=256 --results-dir=outputs/GTA --epochs=500 --ckpt-every=250000 
+accelerate launch train.py --multi_gpu --num_processes N --model DiT-B/2 --features-path /path/to/store/features --posenc=rope --image-size=256 --results-dir=outputs/RoPE --epochs=500 --ckpt-every=250000 
 ```
 
 ### PyTorch Training Results
