@@ -51,7 +51,7 @@ We've trained DiT-XL/2 and DiT-B/4 models from scratch with the PyTorch training
 to verify that it reproduces the original JAX results up to several hundred thousand training iterations. Across our experiments, the PyTorch-trained models give 
 similar (and sometimes slightly better) results compared to the JAX-trained models up to reasonable random variation. Some data points:
 
-| DiT Model  | Train Steps | FID-50K<br> (PyTorch Training)|
+| DiT Model  | Train Steps | FID-50K                    |
 |------------|-------------|----------------------------|
 | B/2        | 200K        | 31.93                      |
 | B/2+RoPE   | 200K        | 25.71                      |
