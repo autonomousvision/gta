@@ -45,11 +45,7 @@ accelerate launch train.py --multi_gpu --num_processes N --model DiT-B/2 --featu
 accelerate launch train.py --multi_gpu --num_processes N --model DiT-B/2 --features-path /path/to/store/features --posenc=rope --image-size=256 --results-dir=outputs/RoPE --epochs=500 --ckpt-every=250000 
 ```
 
-### PyTorch Training Results
-
-We've trained DiT-XL/2 and DiT-B/4 models from scratch with the PyTorch training script
-to verify that it reproduces the original JAX results up to several hundred thousand training iterations. Across our experiments, the PyTorch-trained models give 
-similar (and sometimes slightly better) results compared to the JAX-trained models up to reasonable random variation. Some data points:
+### Results
 
 | DiT Model  | Train Steps | FID-50K                    |
 |------------|-------------|----------------------------|
