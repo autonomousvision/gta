@@ -26,13 +26,13 @@ Official reproducing code of our ICLR2024 work: "GTA: A Geometry-Aware Attention
 
 ## Contents
 
-This repository contains the following different codebases, and you can access each of them by switching to the corresponding branch:
+This repository contains the following different codebases, each of which can be accessed by switching to the corresponding branch:
 - NVS experiments on CLEVR-TR and MSN-Hard (this branch)
 - NVS experiments on ACID and RealEstate ([link](https://github.com/autonomousvision/gta/tree/crsrndr))
 - ImageNet generation with Diffusion transformers (DiT) ([link](https://github.com/autonomousvision/gta/tree/DiT))
 
 
-You can find the code of GTA for multi-view ViTs 
+You can find the code of GTA for multi-view ViTs
 [here](https://github.com/autonomousvision/gta/blob/main/source/utils/gta.py) and for image ViTs [here](https://github.com/autonomousvision/gta/blob/DiT/gta.py#L69). 
 
 Please feel free to reach out to us if you have any questions!
