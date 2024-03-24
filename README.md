@@ -52,6 +52,7 @@ accelerate launch train.py --multi_gpu --num_processes N --model DiT-B/2 --featu
 | B/2        | 200K        | 31.93                      |
 | B/2+RoPE   | 200K        | 25.71                      |
 | B/2+GTA    | 200K        | **25.15** (2.2% relative improvment over RoPE)                 |
+| B/2        | 2.5M        | 7.03                       |
 | B/2+RoPE   | 2.5M        | 6.26                       | 
 | B/2+GTA    | 2.5M        | **5.87**  (6.2% relative improvment over RoPE)                 |
 
