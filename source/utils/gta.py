@@ -6,61 +6,6 @@ from collections import OrderedDict
 import torch.nn.functional as F
 
 
-def ray2rotation(rays, center=[0.0, 0.0, 1.0], return_4x4=False):
-    """
-    Compute a transform R that maps rays to center: Rr = center
-    Args:
-        rays: tensor of shape (..., 3)
-        center: an array of shape (3,)
-    Return:
-        Tensor of shape [..., 3,3] or [..., 4,4]
-    """
-    # Define the center vector
-    center_vector = torch.tensor(center).to(rays.device)
-    center_vector = center_vector.unsqueeze(0)
-
-    # Normalize the rays
-    rays = F.normalize(rays, p=2, dim=-1)
-    center_vector = F.normalize(center_vector, p=2, dim=-1)
-
-    # rays x center
-    axis = torch.cross(rays, center_vector.expand_as(rays), dim=-1)
-    axis_norm = torch.norm(axis, p=2, dim=-1, keepdim=True)
-    axis = axis / axis_norm.clamp(min=1e-6)
-
-    # Compute the dot product between the rays and the center vector to get the cosine of the angle
-    cosine = torch.sum(rays * center_vector.expand_as(rays),
-                       dim=-1, keepdim=True)
-    angle = torch.acos(cosine.clamp(-1.0, 1.0))
-
-    # Compute the components of the rotation matrix
-    c = torch.cos(angle)
-    s = torch.sin(angle)
-    oc = 1.0 - c
-
-    x = axis[..., 0:1]
-    y = axis[..., 1:2]
-    z = axis[..., 2:3]
-
-    # Construct the rotation matrices
-    rotation_matrices = torch.cat([
-        oc * x * x + c, oc * x * y - s * z, oc * x * z + s * y,
-        oc * y * x + s * z, oc * y * y + c, oc * y * z - s * x,
-        oc * z * x - s * y, oc * z * y + s * x, oc * z * z + c,
-    ], dim=-1)
-
-    rotation_matrices = rotation_matrices.reshape(*rays.shape[:-1], 3, 3)
-
-    if return_4x4:
-        # Create the SE(3) matrices with the rotation part and zero translation
-        se3_matrices = torch.zeros(*rays.shape[:-1], 4, 4, device=rays.device)
-        se3_matrices[..., :3, :3] = rotation_matrices
-        se3_matrices[..., 3, 3] = 1
-        return se3_matrices
-
-    return rotation_matrices
-
-
 def make_2dcoord(H, W):
     """
     Return 2d coord values of shape [H, W, 2] 
