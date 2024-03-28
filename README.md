@@ -58,6 +58,9 @@ accelerate launch train.py --multi_gpu --num_processes N --model DiT-B/2 --featu
 
 These models were trained at 256x256 resolution; we used 4x A100s to train B/2. Here, FID is computed with 250 DDPM sampling steps, with the `ema` VAE decoder and with guidance (`cfg-scale=1.5`). 
 
+![dit_samples](https://github.com/autonomousvision/gta/assets/11573649/6f9f25db-b895-4e51-b53a-b0f191967921)
+
+
 
 ## Evaluation (FID, Inception Score, etc.)
 
@@ -74,3 +77,10 @@ torchrun --nnodes=1 --nproc_per_node=N sample_ddp.py --model DiT-B/2 --num-fid-s
 ```
 
 There are several additional options; see [`sample_ddp.py`](sample_ddp.py) for details.
+
+## Generate samples 
+
+```
+export class=-1 # -1 indicates classes will be randomly sampled. Replace this with your desired class ID.
+torchrun --nnodes=1 --nproc_per_node=1 sample.py --model DiT-B/2  --ckpt=/path/to/checkpoint --posenc=gta --num_samples=16 --sample-class=$class 
+```
