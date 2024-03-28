@@ -71,7 +71,7 @@ def main(args):
     samples = vae.decode(samples / 0.18215).sample
 
     # Save and display images:
-    save_image(samples, "samples/sample_{}_{}.png".format(args.posenc, args.sample_class), nrow=2, normalize=True, value_range=(-1, 1))
+    save_image(samples, "samples/sample_{}_{}.png".format(args.posenc, args.sample_class), nrow=args.ncol, normalize=True, value_range=(-1, 1))
 
 
 if __name__ == "__main__":
@@ -82,6 +82,7 @@ if __name__ == "__main__":
     parser.add_argument("--num-classes", type=int, default=1000)
     parser.add_argument("--sample-class", type=int, default=-1)
     parser.add_argument("--num_samples", type=int, default=16)
+    parser.add_argument("--ncol", type=int, default=4)
     parser.add_argument("--cfg-scale", type=float, default=1.5)
     parser.add_argument("--num-sampling-steps", type=int, default=250)
     parser.add_argument("--posenc", type=str, choices=['abs', 'rope', 'gta'], default='rope')
