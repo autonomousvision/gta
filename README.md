@@ -81,6 +81,6 @@ There are several additional options; see [`sample_ddp.py`](sample_ddp.py) for d
 ## Generate samples 
 
 ```
-export class=-1 # -1 indicates classes will be randomly sampled. Change this value to whatever class you want to generate with.
+export class=-1 # -1 indicates classes will be randomly sampled. Replace this with your desired class ID.
 torchrun --nnodes=1 --nproc_per_node=1 sample.py --model DiT-B/2  --ckpt=/path/to/checkpoint --posenc=gta --num_samples=16 --sample-class=$class 
 ```
