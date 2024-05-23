@@ -147,7 +147,7 @@ def evaluate(model, loader, cfg, n_target_views):
 
 if __name__=='__main__':
     parser = argparse.ArgumentParser(
-        description='Train a 3D scene representation model.'
+        description='Evaluate a scene representation model.'
     )
     parser.add_argument('config', type=str, help='Path to config file.')
     parser.add_argument('datapath', type=str, help='Path to datadir')
