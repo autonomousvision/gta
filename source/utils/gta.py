@@ -97,7 +97,7 @@ def multihead_geometric_transform_attention(
         q: Tensor of shape [B, H, Nq*Tq, C] where Nq and Tq is the num of query views and image patch tokens 
         k: Tensor of shape [B, H, Nk*Tk, C] where Nk and Tk is the num of key-value views and image patch tokens 
         v: Tensor of shape [B, H, Nk*Tk, Cv] 
-        attn_fn: Attnetion function that outpus f(QK) given QK. f is for example Softmax in vanilla transformer.
+        attn_fn: Attention function over QKV-vectors. Typically it is Softmax(QK')V.
         f_dims: Dict which specifies dimensions of each geometric type
         reps: Dict contains pre-computed representation matrices ρ
         trans_coeff: Scaler that adjusts scale coeffs 
