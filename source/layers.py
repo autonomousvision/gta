@@ -218,7 +218,7 @@ class Attention(nn.Module):
 
             def forward(self, q, k, v):
                 # sim(Q, K) = -0.5*||Q-K||^2 = Q'K - 0.5Q'Q - 0.5K'K
-                sim = q @ k.transpose(-1, -2)  - 0.5 * q.sum(-1)[..., None] - 0.5 * k.sum(-1)[..., None, :] 
+                sim = q @ k.transpose(-1, -2)  - 0.5 * q.pow(2).sum(-1)[..., None] - 0.5 * k.pow(2).sum(-1)[..., None, :]
                 attn = nn.Softmax(-1)(sim * self.scale / tau)
                 out = (attn @ v)
                 return out, attn
