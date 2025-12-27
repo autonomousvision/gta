@@ -23,6 +23,14 @@ Official reproducing code of our ICLR2024 work: "GTA: A Geometry-Aware Attention
 
 (3/15/2024): The GTA mechanism is also effective for image generation, which is a purely 2D task. You can find the experimental details in our camera-ready paper and the implementation at this [branch](https://github.com/autonomousvision/gta/tree/DiT).
 
+⭐ (12/27/2025) ⭐ 
+Recently, GTA-style camera encoding has been increasingly adopted across a variety of works, particularly for improved camera control:
+- [PRoPE](https://www.liruilong.cn/prope/): which extends GTA by incorporating intrinsic-aware camera encoding.
+- [UCPE](https://github.com/chengzhag/UCPE): further extends GTA and PRoPE to support non-pinhole camera models.
+- [Kaleido](https://shikun.io/projects/kaleido): a large generative model for scene-level neural rendering
+- [WorldPlay](https://3d-models.hunyuan.tencent.com/world/): a generative world model with real-time interaction.
+- [ReDirector](https://byeongjun-park.github.io/ReDirector/): GTA-like camera encoding for video diffusion models.
+
 
 ## Contents
 
