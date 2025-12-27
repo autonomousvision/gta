@@ -15,13 +15,11 @@
 
 
   <p align="center">
-  <img width="180" alt="gta_mech" src="https://github.com/autonomousvision/gta/assets/11573649/939bc44b-3fde-48b8-96ce-4f68c6c55ccd">
+  <img width="150" alt="gta_mech" src="https://github.com/autonomousvision/gta/assets/11573649/939bc44b-3fde-48b8-96ce-4f68c6c55ccd">
   </p>
 </p>
 
 Official reproducing code of our ICLR2024 work: "GTA: A Geometry-Aware Attention Mechanism for Multi-view Transformers", a simple way to make your multi-view transformer more expressive! 
-
-(3/15/2024): The GTA mechanism is also effective for image generation, which is a purely 2D task. You can find the experimental details in our camera-ready paper and the implementation at this [branch](https://github.com/autonomousvision/gta/tree/DiT).
 
 ⭐ (12/27/2025) ⭐ 
 Recently, GTA-style camera encoding has been increasingly adopted across a variety of works, particularly for improved camera control:
@@ -31,6 +29,7 @@ Recently, GTA-style camera encoding has been increasingly adopted across a varie
 - [WorldPlay](https://3d-models.hunyuan.tencent.com/world/): a generative world model with real-time interaction.
 - [ReDirector](https://byeongjun-park.github.io/ReDirector/): GTA-like camera encoding for video diffusion models.
 
+(3/15/2024): The GTA mechanism is also effective for image generation, which is a purely 2D task. You can find the experimental details in our camera-ready paper and the implementation at this [branch](https://github.com/autonomousvision/gta/tree/DiT).
 
 ## Contents
 
